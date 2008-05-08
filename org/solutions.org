@@ -1,0 +1,82 @@
+* Install iSight camera on a MacBook (gen 1) using Ubuntu Feisty (7.04)
+
+As of 2007-09-02:
+
+#!/bin/bash
+sudo modprobe -r uvcvideo
+sudo mv /lib/modules/$(uname -r)/kernel/ubuntu/media/usbvideo/uvcvideo.ko /lib/modules/$(uname -r)/kernel/ubuntu/media/usbvideo/uvcvideo.ko.original
+sudo apt-get update
+sudo apt-get install libusb-0.1-4 libusb-dev linux-headers-$(uname -r)
+wget http://files.i-nz.net/projects/linux-kernel/isight/uvcvideo-isight.tar.gz
+tar -xzvf uvcvideo-isight.tar.gz
+cd against-revision-100
+sudo make
+sudo make install
+sudo modprobe uvcvideo
+
+From: [[http://ubuntuforums.org/showthread.php?t=225621]]
+
+
+** Test iSight camera
+
+ gst-launch-0.10 v4l2src ! video/x-raw-yuv,format=\(fourcc\)UYVY,width=640,height=480 ! ffmpegcolorspace ! ximagesink
+
+
+* Enable Microphone an Macbook (gen 1) Ubuntu
+
+ amixer sset 'Input Source' 'Line'
+ amixer sset 'Input Source' 'Mic'
+
+needs to be done once per boot
+
+** Test Microphone
+
+ arecord -vv /dev/null  # shows a bar with current input level
+
+** Increase Volume of input:
+ 
+ increase Mux bar for
+
+ alsamixer -V capture
+
+
+* Hide Icons in Firefox Bookmarks Toolbar
+
+put this into the firefox userChrome.css
+
+toolbarbutton.bookmark-item > .toolbarbutton-icon {
+  display: none; 
+}
+
+From: [[http://rbenson.wordpress.com/2005/10/22/firefox-hide-bookmark-toolbar-icons/]]
+
+
+* Rotating video clips
+
+ mencoder -ovc lavc -lavcopts vcodec=mjpeg -vop rotate=1 -oac copy input.avi -o tmp1.avi
+
+the mjpeg option keeps the quality higher, the best solution would be
+to use -ovc raw, but i couldn't get it to work
+
+
+* Take a screenshot
+
+using imagemagick
+
+ sleep 3; import -window root screenshot.png
+
+* Re-read .Xdefaults file
+
+To reread your .Xresources file, and throw away your old resources, you can type:
+
+  xrdb ~/.Xdefaults
+
+To reread your .Xresources file, and keep your old resources, type:
+
+  xrdb -merge ~/.Xdefaults
+
+* Manually listen on a socket
+
+  - use the "nc" (network connect?) program
+
+
