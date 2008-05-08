@@ -1,0 +1,2 @@
+send sendmail-command msmtp %t %<
+send sign
