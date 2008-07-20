@@ -49,6 +49,8 @@
 ;(define-key global-map [(alt f2)] 'bookmark-set)
 ;(define-key global-map [(alt ?\-)] 'dabbrev-expand)
 
+(global-set-key [(control up)] '(lambda () (interactive) (previous-line 4)))
+(global-set-key [(control down)] '(lambda () (interactive) (next-line 4)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Color Theme Stuff
@@ -187,6 +189,7 @@
   (define-key haskell-mode-map [(meta alt l)] 'inferior-haskell-load-file) 
   (define-key haskell-mode-map [(meta alt r)] 'inferior-haskell-reload-file) 
   (define-key haskell-mode-map [f4] 'darcsum-whatsnew)
+  (define-key haskell-mode-map [(alt ?.)] 'find-tag-other-window)
   
   ; (add-hook 'write-file-hooks 'delete-trailing-space)
   (snippet-with-abbrev-table 'haskell-mode-abbrev-table
@@ -195,6 +198,11 @@
 			     ("let" . "let $${decl} = $${undefined} in $.")
 			     ("if"  .  "if $${expr} then $$ else $${undefined}"))
   )
+
+(add-to-list 'load-path "~/.emacs.d/agda-mode")
+(autoload 'agda2-mode "agda2-mode" "Agda2 mode." t)
+(add-to-list 'auto-mode-alist '("\\.l?agda$" . agda2-mode))
+(modify-coding-system-alist 'file "\\.l?agda$" 'utf-8)
 
 ;; (load "haskell-unicode")
 
